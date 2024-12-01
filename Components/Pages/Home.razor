@@ -1,9 +1,105 @@
 ﻿@page "/"
+@using System.Text.RegularExpressions
 
 <PageTitle>Home</PageTitle>
-
+<link rel="stylesheet" href="Form.css" />
 <h1 class="gold-theme">Welcome To Void Weather Systems</h1>
 
 <div class="gold-theme">
 	Needing accurate location based weather prediction . We here at Void Weather systems can provide that in simple and concise format without hassel
+	A small demonstration is at hand here to prove what is capable with endpoints 
 </div>
+
+
+<div class="form pt-lg-5">
+    <form @onsubmit="HandleSubmitAsync">
+        <div class="dropdown-container">
+            <label for="inputType" class="form-label">Select Location Input Type:</label>
+            <select id="inputType" class="dropdown" @onchange="HandleInputTypeChange">
+                <option value="city">City Name</option>
+                <option value="coordinates">Longitude/Latitude</option>
+                <option value="ip">IP Address</option>
+            </select>
+        </div>
+        <div class="container">
+            <label for="searchInput" class="row-cols-1 form-label">Enter @Hint:</label>
+            <input type="text" id="searchInput" class="row-cols-2 form-control" @bind="SearchInput" placeholder="@Hint" />
+
+            <button type="submit" class="row-cols-2 btn btn-primary">Search</button>
+            <p class="row-cols-3 error-message">@ValidationErrorMessage</p>
+        </div>
+        
+        
+    </form>
+</div>
+
+@code {
+    private string SelectedOption = "city"; // Default dropdown value
+    private string SearchInput = "";       
+    private string ValidationErrorMessage = ""; // Error message
+    private string Hint = "City name (e.g., London)"; 
+
+    private void HandleInputTypeChange(ChangeEventArgs e)
+    {
+        SelectedOption = e.Value.ToString(); // Update the selected option
+        switch (SelectedOption)
+        {
+            case "city":
+                Hint = "City name (e.g., London)";
+                break;
+            case "coordinates":
+                Hint = "Longitude, Latitude (e.g., -0.13, 51.51)";
+                break;
+            case "ip":
+                Hint = "IP Address (e.g., 192.168.1.1)";
+                break;
+        }
+    }
+
+    private async Task HandleSubmitAsync()
+    {
+        //perform validation based on the selected input type
+        switch (SelectedOption)
+        {
+            case "city":
+                if (string.IsNullOrWhiteSpace(SearchInput))
+                {
+                    ValidationErrorMessage = "City name cannot be empty.";
+                }
+                else if (!Regex.IsMatch(SearchInput, @"^[a-zA-Z\s]+$"))
+                {
+                    ValidationErrorMessage = "City name must contain only letters and spaces.";
+                }
+                break;
+
+            case "coordinates":
+                if (string.IsNullOrWhiteSpace(SearchInput))
+                {
+                    ValidationErrorMessage = "Coordinates cannot be empty.";
+                }
+                else if (!Regex.IsMatch(SearchInput, @"^-?\d+(\.\d+)?,\s?-?\d+(\.\d+)?$"))
+                {
+                    ValidationErrorMessage = "Invalid coordinates format. Use 'Longitude, Latitude'.";
+                }
+                break;
+
+            case "ip":
+                if (string.IsNullOrWhiteSpace(SearchInput))
+                {
+                    ValidationErrorMessage = "IP Address cannot be empty.";
+                }
+                else if (!Regex.IsMatch(SearchInput, @"^\d{1,3}(\.\d{1,3}){3}$"))
+                {
+                    ValidationErrorMessage = "Invalid IP Address format. Use 'xxx.xxx.xxx.xxx'.";
+                }
+                break;
+        }
+
+        if (string.IsNullOrEmpty(ValidationErrorMessage))
+        {
+            // If validation passes, handle the search logic (e.g., API call)
+            Console.WriteLine($"Searching for {SelectedOption}: {SearchInput}");
+        }
+
+    }
+}

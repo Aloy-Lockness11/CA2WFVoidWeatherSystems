@@ -35,3 +35,31 @@ form {
         color: #ffd700;
         border-color: #800080;
     }
+
+    /* Aff3ects Search Bar */
+
+
+.dropdown-container, .input-container {
+    margin-bottom: 1rem;
+}
+
+
+.dropdown {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    color: #ffd700;
+    border: 1px solid #ff6a00;
+    background-color: #000;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(128, 0, 128, 0.4);
+    outline: none;
+}
+
+
+
+.error-message {
+    color: red;
+    font-size: 0.85rem;
+    margin-top: 0.5rem;
+}
