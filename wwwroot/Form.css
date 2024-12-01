@@ -1,4 +1,24 @@
-﻿
+﻿/* Main container for search bar and button */
+.search-container {
+    display: flex;
+    align-items: center;
+    gap: 0; 
+}
+
+/* Search input field styles */
+.search-input {
+    flex-grow: 1; 
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+}
+
+.search-button {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    padding: 10px 20px;
+}
+
+/* Form overall styling */
 form {
     background-color: #111;
     padding: 20px;
@@ -8,20 +28,29 @@ form {
     margin: auto;
 }
 
-/* Labels */
-.form-label {
-    color: #ffd700;
-    font-size: 16px;
-    font-weight: bold;
+/* Dropdown container */
+.dropdown-container {
+    margin-bottom: 1rem;
 }
 
-/* Input fields */
+/* Dropdown */
+.dropdown {
+    width: 100%;
+    padding: 0.5rem;
+    font-size: 1rem;
+    color: #ffd700;
+    border: 1px solid #ff6a00;
+    background-color: #000;
+    border-radius: 5px;
+    box-shadow: 0 4px 10px rgba(128, 0, 128, 0.4);
+    outline: none;
+}
+
+/* Input field and labels */
 .form-control {
     background-color: #000;
     color: #ffd700;
     border: 2px solid #ffd700;
-    border-radius: 8px;
-    padding: 10px;
     font-size: 16px;
     font-weight: bold;
     box-shadow: 0 4px 10px rgba(128, 0, 128, 0.4);
@@ -36,28 +65,14 @@ form {
         border-color: #800080;
     }
 
-    /* Aff3ects Search Bar */
-
-
-.dropdown-container, .input-container {
-    margin-bottom: 1rem;
-}
-
-
-.dropdown {
-    width: 100%;
-    padding: 0.5rem;
-    font-size: 1rem;
+/* Labels */
+.form-label {
     color: #ffd700;
-    border: 1px solid #ff6a00;
-    background-color: #000;
-    border-radius: 5px;
-    box-shadow: 0 4px 10px rgba(128, 0, 128, 0.4);
-    outline: none;
+    font-size: 16px;
+    font-weight: bold;
 }
 
-
-
+/* Error message */
 .error-message {
     color: red;
     font-size: 0.85rem;

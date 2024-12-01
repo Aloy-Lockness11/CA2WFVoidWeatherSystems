@@ -11,7 +11,7 @@
 </div>
 
 
-<div class="form pt-lg-5">
+<div class="form" style="margin:2.5rem">
     <form @onsubmit="HandleSubmitAsync">
         <div class="dropdown-container">
             <label for="inputType" class="form-label">Select Location Input Type:</label>
@@ -21,15 +21,12 @@
                 <option value="ip">IP Address</option>
             </select>
         </div>
-        <div class="container">
-            <label for="searchInput" class="row-cols-1 form-label">Enter @Hint:</label>
-            <input type="text" id="searchInput" class="row-cols-2 form-control" @bind="SearchInput" placeholder="@Hint" />
-
-            <button type="submit" class="row-cols-2 btn btn-primary">Search</button>
-            <p class="row-cols-3 error-message">@ValidationErrorMessage</p>
+        <label for="inputType" class="form-label">Enter In location Details:</label>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="form-control search-input" @bind="SearchInput" placeholder="@Hint" />
+            <button type="submit" class="btn btn-primary search-button">Search</button>
         </div>
-        
-        
+        <p class="error-message">@ValidationErrorMessage</p>
     </form>
 </div>
 
