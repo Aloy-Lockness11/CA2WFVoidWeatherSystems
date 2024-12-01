@@ -1,0 +1,38 @@
+﻿
+<div class="top-row ps-3 navbar navbar-dark">
+    <div class="container-fluid">
+		<a class="gold-theme navbar-brand" href="/">VoidWeatherSystems</a>
+    </div>
+</div>
+
+<input type="checkbox" title="Navigation menu" class="navbar-toggler" />
+
+<div class="nav-scrollable" onclick="document.querySelector('.navbar-toggler').click()">
+	<nav class="flex-column">
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/" Match="NavLinkMatch.All">
+                <i class="fa fa-home w3-large w3-padding" aria-hidden="true"></i> Home
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/login" Match="NavLinkMatch.All">
+                <i class="fa fa-user w3-large w3-padding" aria-hidden="true"></i> Login
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/register" Match="NavLinkMatch.All">
+                <i class="fa fa-user-plus w3-large w3-padding" aria-hidden="true"></i> Register
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/forecast" Match="NavLinkMatch.All">
+                <i class="fa fa-search w3-large w3-padding" aria-hidden="true"></i> Weather Forecast
+            </NavLink>
+        </div>
+        <div class="nav-item px-3">
+            <NavLink class="nav-link" href="/alerts" Match="NavLinkMatch.All">
+                <i class="fa fa-bell w3-large w3-padding" aria-hidden="true"></i> Weather Alerts
+            </NavLink>
+        </div>
+    </nav>
+</div>

@@ -1,0 +1,37 @@
+﻿
+form {
+    background-color: #111;
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.7);
+    max-width: 400px;
+    margin: auto;
+}
+
+/* Labels */
+.form-label {
+    color: #ffd700;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+/* Input fields */
+.form-control {
+    background-color: #000;
+    color: #ffd700;
+    border: 2px solid #ffd700;
+    border-radius: 8px;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    box-shadow: 0 4px 10px rgba(128, 0, 128, 0.4);
+    transition: all 0.3s ease;
+}
+
+    .form-control:focus {
+        background-color: #111;
+        box-shadow: 0 6px 15px rgba(128, 0, 128, 0.6);
+        outline: none;
+        color: #ffd700;
+        border-color: #800080;
+    }

@@ -1,0 +1,123 @@
+.navbar-toggler {
+    appearance: none;
+    cursor: pointer;
+    width: 3.5rem;
+    height: 2.5rem;
+    color: #ffd700; /* Gold color */
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    border: 2px solid #800080; /* Purple border */
+    border-radius: 6px;
+    background-color: #000; /* Black background */
+    box-shadow: 4px 0px 10px rgba(128, 0, 128, 0.4); /* Purple glow */
+    background: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba%28255, 255, 255, 0.55%29' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e") no-repeat center/1.75rem rgba(255, 255, 255, 0.1);
+}
+
+    .navbar-toggler:checked {
+        background-color: rgba(255, 215, 0, 0.5); /* Gold highlight */
+        border-color: #ffd700;
+    }
+
+.top-row {
+    height: 3.5rem;
+    background-color: #111;
+    box-shadow: 4px 0px 10px rgba(128, 0, 128, 0.4); /* Purple glow */
+}
+
+.navbar-brand {
+    font-size: 1.1rem;
+}
+
+.bi {
+    display: inline-block;
+    position: relative;
+    width: 1.25rem;
+    height: 1.25rem;
+    margin-right: 0.75rem;
+    top: -1px;
+    background-size: contain;
+}
+
+/* Home icon */
+.bi-house-door-fill-nav-menu {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-house-door-fill' viewBox='0 0 16 16'%3E%3Cpath d='M6.5 14.5v-3.505c0-.245.25-.495.5-.495h2c.25 0 .5.25.5.5v3.5a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5v-7a.5.5 0 0 0-.146-.354L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293L8.354 1.146a.5.5 0 0 0-.708 0l-6 6A.5.5 0 0 0 1.5 7.5v7a.5.5 0 0 0 .5.5h4a.5.5 0 0 0 .5-.5Z'/%3E%3C/svg%3E");
+}
+/* user login icon */
+.bi-person-fill-nav-menu {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-person-fill' viewBox='0 0 16 16'%3E%3Cpath d='M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1H3zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6z'/%3E%3C/svg%3E");
+}
+/* person with pen */
+.bi-person-pen-nav-menu {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-person-pen' viewBox='0 0 16 16'%3E%3Cpath d='M8 6a3 3 0 1 0 0-6 3 3 0 0 0 0 6zm5 5.5c0 1.5-2.5 3-5 3s-5-1.5-5-3 2.5-3 5-3 5 1.5 5 3zm2.854-2.854a.5.5 0 0 0-.707 0l-4.5 4.5-.5 1.5 1.5-.5 4.5-4.5a.5.5 0 0 0 0-.707z'/%3E%3C/svg%3E");
+}
+
+/* weather forecast icon */
+.bi-search-nav-menu {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-search' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.742a6 6 0 1 0-1.416 1.416 6 6 0 0 0 1.416-1.416zM12 7a5 5 0 1 1-10 0 5 5 0 0 1 10 0z'/%3E%3C/svg%3E");
+}
+
+/* weather alerts icon */
+.bi-bell-nav-menu {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' fill='white' class='bi bi-bell' viewBox='0 0 16 16'%3E%3Cpath d='M8 16a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM5 4a5 5 0 0 1 10 0c0 3-1.9 5.8-4.6 7.3V11a1 1 0 0 0-1-1H6a1 1 0 0 0-1 1v.3C4.1 9.8 3 7 3 4a5 5 0 0 1 2-3.8A5.002 5.002 0 0 1 8 1a5.002 5.002 0 0 1 3.8 1.2A5 5 0 0 1 13 4z'/%3E%3C/svg%3E");
+}
+.nav-item {
+    font-size: 0.9rem;
+    padding-bottom: 0.5rem;
+}
+
+    .nav-item:first-of-type {
+        padding-top: 1rem;
+    }
+
+    .nav-item:last-of-type {
+        padding-bottom: 1rem;
+    }
+
+    .nav-item ::deep .nav-link {
+        display: flex;
+        align-items: center;
+        background-color: #111; /* Black background */
+        color: #ffd700; /* Gold text */
+        border: 2px solid #ffd700; /* Gold border */
+        border-radius: 8px; /* Rounded corners */
+        padding: 10px 20px;
+        font-size: 16px;
+        font-weight: bold;
+        box-shadow: 0 4px 10px rgba(128, 0, 128, 0.4); /* Purple glow */
+        transition: all 0.25s ease;
+    }
+
+    .nav-item ::deep a.active {
+        border-color: #800080; /* Purple border on hover */
+        color: #ffd700;
+        box-shadow: 0 6px 15px rgba(128, 0, 128, 0.6); /* Intense purple glow */
+        transform: scale(1.05); /* Slight zoom */
+    }
+
+    .nav-item ::deep .nav-link:hover {
+        transform: scale(0.85); /* Reduce size on click */
+        box-shadow: 0 3px 8px rgba(128, 0, 128, 0.3);
+    }
+
+.nav-scrollable {
+    display: none;
+}
+
+.navbar-toggler:checked ~ .nav-scrollable {
+    display: block;
+}
+
+@media (min-width: 641px) {
+    .navbar-toggler {
+        display: none;
+    }
+
+    .nav-scrollable {
+        /* Never collapse the sidebar for wide screens */
+        display: block;
+        /* Allow sidebar to scroll for tall menus */
+        height: calc(100vh - 3.5rem);
+        overflow-y: auto;
+    }
+}
