@@ -1,13 +1,13 @@
 ﻿@page "/"
-@using System.Text.RegularExpressions
+@rendermode InteractiveServer
 
 <PageTitle>Home</PageTitle>
 <link rel="stylesheet" href="Form.css" />
 <h1 class="gold-theme">Welcome To Void Weather Systems</h1>
 
 <div class="gold-theme">
-	Needing accurate location based weather prediction . We here at Void Weather systems can provide that in simple and concise format without hassel
-	A small demonstration is at hand here to prove what is capable with endpoints 
+    Needing accurate location based weather prediction . We here at Void Weather systems can provide that in simple and concise format without hassel
+    A small demonstration is at hand here to prove what is capable with endpoints 
 </div>
 
 
@@ -15,7 +15,9 @@
     <form @onsubmit="HandleSubmitAsync">
         <div class="dropdown-container">
             <label for="inputType" class="form-label">Select Location Input Type:</label>
-            <select id="inputType" class="dropdown" @onchange="HandleInputTypeChange">
+            <select id="inputType" class="dropdown"
+                    @bind="selectedOption"
+                    @bind:after="HandleInputTypeChange">
                 <option value="city">City Name</option>
                 <option value="coordinates">Longitude/Latitude</option>
                 <option value="ip">IP Address</option>
@@ -23,7 +25,7 @@
         </div>
         <label for="inputType" class="form-label">Enter In location Details:</label>
         <div class="search-container">
-            <input type="text" id="searchInput" class="form-control search-input" @bind="SearchInput" placeholder="@Hint" />
+            <input type="text" id="searchInput" class="form-control search-input" @bind-value="SearchInput" placeholder="@Hint" />
             <button type="submit" class="btn btn-primary search-button">Search</button>
         </div>
         <p class="error-message">@ValidationErrorMessage</p>
@@ -31,15 +33,15 @@
 </div>
 
 @code {
-    private string SelectedOption = "city"; // Default dropdown value
+    private string selectedOption = "city"; // Default dropdown value
     private string SearchInput = "";       
     private string ValidationErrorMessage = ""; // Error message
     private string Hint = "City name (e.g., London)"; 
 
-    private void HandleInputTypeChange(ChangeEventArgs e)
+    private void HandleInputTypeChange()
     {
-        SelectedOption = e.Value.ToString(); // Update the selected option
-        switch (SelectedOption)
+        Console.WriteLine($"Selected Option: {selectedOption}");
+        switch (selectedOption)
         {
             case "city":
                 Hint = "City name (e.g., London)";
@@ -56,7 +58,8 @@
     private async Task HandleSubmitAsync()
     {
         //perform validation based on the selected input type
-        switch (SelectedOption)
+        Console.WriteLine($"Selected Option: {selectedOption}");
+        switch (selectedOption)
         {
             case "city":
                 if (string.IsNullOrWhiteSpace(SearchInput))
@@ -94,8 +97,7 @@
 
         if (string.IsNullOrEmpty(ValidationErrorMessage))
         {
-            // If validation passes, handle the search logic (e.g., API call)
-            Console.WriteLine($"Searching for {SelectedOption}: {SearchInput}");
+            Console.WriteLine($"Searching for {selectedOption}: {SearchInput}");
         }
 
     }
