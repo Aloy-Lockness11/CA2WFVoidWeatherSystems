@@ -11,8 +11,4 @@
     <Content Remove="Components\Pages\weatherForecast.razor" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\" />
-  </ItemGroup>
-
 </Project>
