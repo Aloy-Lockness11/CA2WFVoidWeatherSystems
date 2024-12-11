@@ -1,0 +1,142 @@
+﻿@page "/userDataCache"
+@rendermode InteractiveServer
+@using CA2WFVoidWeatherSystems.Services
+@using CA2WFVoidWeatherSystems.Business
+@inject IJSRuntime JSRuntime
+
+<PageTitle>User Data</PageTitle>
+<link rel="stylesheet" href="Form.css" />
+<div class="form" >
+    <form style="margin:2.5rem">
+        <h2 class="text-center gold-theme">User data</h2>
+        <div>
+            <label class="form-label">Email:</label>
+            <input class="form-control" @bind="email" placeholder="Enter email" />
+        </div>
+
+        <div class="dropdown-container">
+            <label for="inputType" class="form-label">Select Location Input Type:</label>
+            <select id="inputType" class="dropdown"
+            @bind="selectedOption"
+            @bind:after="HandleInputTypeChange">
+                <option value="city">City Name</option>
+                <option value="coordinates">Longitude/Latitude</option>
+                <option value="ip">IP Address</option>
+            </select>
+        </div>
+        <label for="inputDetails" class="form-label">Enter Location Details:</label>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="form-control search-input"
+            @bind-value="SearchInput" placeholder="@Hint" />
+        </div>
+        <p class="error-message">@ValidationErrorMessage</p>
+
+
+    </form>
+    @if (!string.IsNullOrEmpty(LoadedEmail) || !string.IsNullOrEmpty(LoadedLocation))
+    {
+        <form style="margin:2.5rem; margin-top:3rem;">
+            <h2 class="text-center gold-theme">Loaded User Data</h2>
+            <div>
+                <label class="form-label">Email:</label>
+                <p class="form-control">@LoadedEmail</p>
+            </div>
+            <div>
+                <label class="form-label">Location:</label>
+                <p class="form-control">@LoadedLocation</p>
+            </div>
+        </form>
+    }
+    <div style="margin-top: 1rem; text-align:center">
+        <button class="btn btn-primary" @onclick="SaveInfo">Save Info</button>
+        <button class="btn btn-primary" @onclick="LoadInfo">Load Info</button>
+        <button class="btn btn-primary" @onclick="RemoveInfo">Remove Info</button>
+    </div>
+
+</div>
+
+@code {
+    private string email;
+    private string location;
+    private string selectedOption = "city"; // Default dropdown value
+    private string SearchInput = "";
+    private string ValidationErrorMessage = ""; // Error message
+    private string Hint = "City name (e.g., London)";
+
+    private string LoadedEmail = string.Empty; 
+    private string LoadedLocation = string.Empty;
+
+    private async Task SaveInfo()
+    {
+        ValidationErrorMessage = string.Empty;
+
+        
+        ValidateLocationInput();
+        ValidateEmailInput();
+
+        if (!string.IsNullOrEmpty(ValidationErrorMessage))
+        {
+            return;
+        }
+
+        await JSRuntime.InvokeVoidAsync("localStorageHelper.setItem", "email", email);
+        await JSRuntime.InvokeVoidAsync("localStorageHelper.setItem", "location", SearchInput);
+
+        ValidationErrorMessage = "Data saved successfully!";
+    }
+
+
+    private async Task LoadInfo()
+    {
+        LoadedEmail = await JSRuntime.InvokeAsync<string>("localStorageHelper.getItem", "email") ?? string.Empty;
+        LoadedLocation = await JSRuntime.InvokeAsync<string>("localStorageHelper.getItem", "location") ?? string.Empty;
+
+        StateHasChanged(); // Ensure UI refresh
+    }
+
+    private async Task RemoveInfo()
+    {
+        await JSRuntime.InvokeVoidAsync("localStorageHelper.removeItem", "email");
+        await JSRuntime.InvokeVoidAsync("localStorageHelper.removeItem", "location");
+        LoadedEmail = string.Empty;
+        LoadedLocation = string.Empty;
+        StateHasChanged(); // Ensure UI refresh
+    }
+
+    private void HandleInputTypeChange()
+    {
+        switch (selectedOption)
+        {
+            case "city":
+                Hint = "City name (e.g., London)";
+                break;
+            case "coordinates":
+                Hint = "Longitude, Latitude (e.g., -0.13, 51.51)";
+                break;
+            case "ip":
+                Hint = "IP Address (e.g., 192.168.1.1)";
+                break;
+        }
+    }
+
+    private void ValidateLocationInput()
+    {
+        ValidationErrorMessage = validation.ValidateLocation(SearchInput, selectedOption);
+    }
+    private void ValidateEmailInput()
+    {
+        string emailError = validation.ValidateEmail(email);
+
+        if (!string.IsNullOrEmpty(emailError))
+        {
+            if (!string.IsNullOrEmpty(ValidationErrorMessage))
+            {
+                ValidationErrorMessage += "\n" + emailError;
+            }
+            else
+            {
+                ValidationErrorMessage = emailError;
+            }
+        }
+    }
+}

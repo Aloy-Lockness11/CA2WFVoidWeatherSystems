@@ -2,16 +2,12 @@
 {
     public interface WeatherReportInter
     {
-        Location Location { get; set; }
-        WeatherCondition Condition { get; set; }
-        double TemperatureC { get; set; }
-        double WindSpeedMph { get; set; }
-        string WindDirection { get; set; }
-        int Humidity { get; set; }
-        int CloudCover { get; set; }
-        double FeelsLikeC { get; set; }
-        double GustSpeedMph { get; set; }
-        string LastUpdated { get; set; }
-        DateTime ReportDate { get; set; }
+        Condition condition { get; set; }
+        string last_updated { get; set; }
+        double temp_c { get; set; }
+        double wind_mph { get; set; }
+        string wind_dir { get; set; }
+        int humidity { get; set; }
+        int cloud { get; set; }
     }
 }

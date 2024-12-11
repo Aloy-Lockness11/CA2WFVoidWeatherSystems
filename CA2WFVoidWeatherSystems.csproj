@@ -11,4 +11,8 @@
     <Content Remove="Components\Pages\weatherForecast.razor" />
   </ItemGroup>
 
+  <ItemGroup>
+    <None Include="wwwroot\localStorageHelper.js" />
+  </ItemGroup>
+
 </Project>

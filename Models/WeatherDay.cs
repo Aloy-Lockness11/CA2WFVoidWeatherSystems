@@ -10,5 +10,17 @@
         {
             Reports = new List<WeatherReportInter>();
         }
+
+        public WeatherDay(DateTime date, string dayName)
+        {
+            Date = date;
+            DayName = dayName;
+            Reports = new List<WeatherReportInter>();
+        }
+
+        public void AddReport(WeatherReportInter report)
+        {
+            Reports.Add(report);
+        }
     }
 }

@@ -5,5 +5,6 @@
         DateTime Date { get; set; }
         string DayName { get; set; }
         List<WeatherReportInter> Reports { get; set; }
+       
     }
 }
