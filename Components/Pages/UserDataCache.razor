@@ -6,7 +6,7 @@
 
 <PageTitle>User Data</PageTitle>
 <link rel="stylesheet" href="Form.css" />
-<div class="form" >
+<div class="form" style="margin:2.5rem">
     <form style="margin:2.5rem">
         <h2 class="text-center gold-theme">User data</h2>
         <div>
@@ -30,8 +30,6 @@
             @bind-value="SearchInput" placeholder="@Hint" />
         </div>
         <p class="error-message">@ValidationErrorMessage</p>
-
-
     </form>
     @if (!string.IsNullOrEmpty(LoadedEmail) || !string.IsNullOrEmpty(LoadedLocation))
     {

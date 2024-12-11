@@ -3,7 +3,6 @@
     public class WeatherDay : WeatherDayInter
     {
         public DateTime Date { get; set; }
-        public string DayName { get; set; }
         public List<WeatherReportInter> Reports { get; set; }
 
         public WeatherDay()
@@ -11,10 +10,9 @@
             Reports = new List<WeatherReportInter>();
         }
 
-        public WeatherDay(DateTime date, string dayName)
+        public WeatherDay(DateTime date)
         {
             Date = date;
-            DayName = dayName;
             Reports = new List<WeatherReportInter>();
         }
 

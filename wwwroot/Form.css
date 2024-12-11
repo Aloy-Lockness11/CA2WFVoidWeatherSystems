@@ -20,6 +20,7 @@
 
 /* Form overall styling */
 form {
+    display: block;
     background-color: #111;
     padding: 20px;
     border-radius: 10px;
