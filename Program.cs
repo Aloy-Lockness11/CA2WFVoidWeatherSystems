@@ -21,7 +21,12 @@ namespace CA2WFVoidWeatherSystems
             builder.Services.AddRazorComponents()
                 .AddInteractiveServerComponents();
 
-            // Register HttpClient with a base address
+
+            //------------------------------------------------------------------------------
+            //Add Twitter API Service
+            builder.Services.AddHttpClient<TwitterService>();
+
+            // Add Weather API Service
             builder.Services.AddHttpClient<WeatherAPIService>(client =>
             {
                 var baseUrl = builder.Configuration["WeatherAPI:BaseUrl"];
@@ -31,6 +36,8 @@ namespace CA2WFVoidWeatherSystems
                 }
                 client.BaseAddress = new Uri(baseUrl);
             });
+
+            //------------------------------------------------------------------------------
 
 
             // Enable detailed errors for Blazor server-side
