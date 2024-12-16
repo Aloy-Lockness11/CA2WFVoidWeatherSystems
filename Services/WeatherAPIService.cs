@@ -142,6 +142,7 @@
                     };
 
                     forecastDay.GetProperty("day");
+
                     // Populate hourly reports for the day
                     var hourlyReportsArray = forecastDay.GetProperty("hour").EnumerateArray();
                     foreach (var hourlyReport in hourlyReportsArray)

@@ -20,10 +20,9 @@ namespace CA2WFVoidWeatherSystems.Services
 
         public async Task<string[]> GetWeatherTweetsAsync(string location)
         {
-            // Ensure location is URL encoded to handle special characters
-            string query = Uri.EscapeDataString($"weather {location}");
+            
 
-            string endpoint = $"https://api.twitter.com/2/tweets/search/recent?query={query}&sort_order=recency&max_results=10";
+            string endpoint = $"https://api.twitter.com/2/tweets/search/recent?query=weather20%{location}&sort_order=recency&max_results=10";
 
             try
             {
