@@ -1,6 +1,146 @@
 ﻿@page "/forecast"
-<h3>weatherForecast</h3>
+@rendermode InteractiveServer
+@inject CA2WFVoidWeatherSystems.Services.WeatherAPIService WeatherAPIService
+@inject IJSRuntime JSRuntime
+
+@using CA2WFVoidWeatherSystems.Models
+@using CA2WFVoidWeatherSystems.Business
+<link rel="stylesheet" href="Form.css" />
+<link rel="stylesheet" href="WeatherCard.css" />
+
+<PageTitle>Weather Forecast</PageTitle>
+<h3 class="gold-theme">Weather Forecast</h3>
+
+<div class="form" style="margin:2.5rem">
+    <form @onsubmit="HandleSubmitAsync">
+        <div class="dropdown-container">
+            <label for="inputType" class="form-label">Select Location Input Type:</label>
+            <select id="inputType" class="dropdown"
+                    @bind="selectedOption"
+                    @bind:after="HandleInputTypeChange">
+                <option value="city">City Name</option>
+                <option value="coordinates">Longitude/Latitude</option>
+                <option value="ip">IP Address</option>
+            </select>
+        </div>
+        <label for="inputDetails" class="form-label">Enter Location Details:</label>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="form-control search-input"
+                   @bind-value="SearchInput" placeholder="@Hint" />
+            <button type="submit" class="btn btn-primary search-button">Search</button>
+        </div>
+        <p class="error-message">@ValidationErrorMessage</p>
+	</form>
+
+    @if (useStoredData)
+	{
+		<div>
+			<button class="btn btn-primary" @onclick="getStoredUserData">Use Stored Data</button>
+		</div>
+	}
+</div>
+
+@if (WeatherResponse != null && WeatherResponse.forecastDays != null)
+{
+    <div class="weather-forecast-container">
+        <div class="weather-list-container">
+            @foreach (var forecast in WeatherResponse.forecastDays)
+            {
+                <div class="weather-day-header">
+                    <h3 class="gold-theme">@forecast.Date.ToString().Substring(0, 11)</h3>
+                </div>
+
+                <!-- Horizontal scrolling container -->
+                <div class="weather-day-scroller">
+                    @foreach (var hourlyReport in forecast.Reports)
+                    {
+                        <div class="weather-mini-card">
+                            <div class="weather-time">
+                                <strong>@hourlyReport.last_updated.Substring(10)</strong> <!-- Format to only show time -->
+                            </div>
+                            <div class="weather-icon">
+                                <img src="@hourlyReport.condition.icon" alt="Weather Icon" />
+                            </div>
+                            <div class="weather-info">
+                                <h4>@hourlyReport.temp_c &#8451;</h4>
+                                <p><strong>Wind:</strong> @hourlyReport.wind_mph Mph</p>
+                                <p><strong>Humidity:</strong> @hourlyReport.humidity %</p>
+                                <p><strong>Cloud Cover:</strong> @hourlyReport.cloud %</p>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+        </div>
+    </div>
+}
+
 
 @code {
 
+    private bool useStoredData = false;
+    private WeatherForecastAPIResponse WeatherResponse;
+    private string selectedOption = "city"; // Default dropdown value
+    private string SearchInput = "";
+    private string ValidationErrorMessage = ""; // Error message
+    private string Hint = "City name (e.g., London)";
+    private string storedLocation = "";
+
+    // This method is called after the component has finished rendering.
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            // Check if there's stored location data in localStorage
+            storedLocation = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "location");
+            if (!string.IsNullOrEmpty(storedLocation))
+            {
+                useStoredData = true;
+                StateHasChanged(); // Trigger a re-render to show the button
+            }
+        }
+    }
+
+    private void getStoredUserData()
+    {
+        // Use the stored location and set it as SearchInput
+        SearchInput = storedLocation;
+    }
+    private void HandleInputTypeChange()
+    {
+        Console.WriteLine($"Selected Option: {selectedOption}");
+        switch (selectedOption)
+        {
+            case "city":
+                Hint = "City name (e.g., London)";
+                break;
+            case "coordinates":
+                Hint = "Longitude, Latitude (e.g., -0.13, 51.51)";
+                break;
+            case "ip":
+                Hint = "IP Address (e.g., 192.168.1.1)";
+                break;
+        }
+    }
+	private async Task HandleSubmitAsync()
+	{
+        //perform validation based on the selected input type
+        ValidationErrorMessage = validation.ValidateLocation(SearchInput, selectedOption);
+
+
+        if (string.IsNullOrEmpty(ValidationErrorMessage))
+        {
+            // Fetch weather data based on the user's input
+            WeatherResponse = await WeatherAPIService.GetWeatherHourlyForecastAsync(SearchInput, selectedOption);
+            if (WeatherResponse == null)
+            {
+                ValidationErrorMessage = "Could not fetch weather data. Please try again.";
+            }
+
+        }
+        else
+        {
+            StateHasChanged(); 
+        }
+	}
 }

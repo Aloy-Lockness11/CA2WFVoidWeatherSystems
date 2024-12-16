@@ -1,6 +1,112 @@
-﻿@page "/alerts";
-<h3>weatherAlerts</h3>
+﻿@page "/alerts"
+@rendermode InteractiveServer
+@inject CA2WFVoidWeatherSystems.Services.WeatherAPIService WeatherAPIService
+@inject CA2WFVoidWeatherSystems.Services.TwitterService TwitterService
+@inject IJSRuntime JSRuntime
+
+@using CA2WFVoidWeatherSystems.Models
+@using CA2WFVoidWeatherSystems.Business
+
+<link rel="stylesheet" href="Form.css" />
+<link rel="stylesheet" href="tweet.css" />
+<PageTitle>Weather Alerts</PageTitle>
+<h3 class="gold-theme">Weather Alerts</h3>
+
+<div class="form" style="margin:2.5rem">
+    <form @onsubmit="HandleSubmitAsync">
+        <div class="dropdown-container">
+            <label for="inputType" class="form-label">Select Location Input Type:</label>
+            <select id="inputType" class="dropdown"
+                    @bind="selectedOption"
+                    @bind:after="HandleInputTypeChange">
+                <option value="city">City Name</option>
+                <option value="coordinates">Longitude/Latitude</option>
+                <option value="ip">IP Address</option>
+            </select>
+        </div>
+        <label for="inputDetails" class="form-label">Enter Location Details:</label>
+        <div class="search-container">
+            <input type="text" id="searchInput" class="form-control search-input"
+                   @bind-value="SearchInput" placeholder="@Hint" />
+            <button type="submit" class="btn btn-primary search-button">Search</button>
+        </div>
+        <p class="error-message">@ValidationErrorMessage</p>
+    </form>
+
+    @if (useStoredData)
+    {
+        <div>
+            <button class="btn btn-primary" @onclick="getStoredUserData">Use Stored Data</button>
+        </div>
+    }
+
+    @if (tweets != null && tweets.Length > 0)
+    {
+        <div class="tweets-container">
+            @foreach (var tweet in tweets)
+            {
+                <div class="tweet-card">
+                    <p>@tweet</p>
+                </div>
+            }
+        </div>
+    }
+</div>
 
 @code {
+    private bool useStoredData = false;
+    private string selectedOption = "city";
+    private string SearchInput = "";
+    private string ValidationErrorMessage = "";
+    private string Hint = "City name (e.g., London)";
+    private string storedLocation = "";
+    private String[] tweets;
 
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            storedLocation = await JSRuntime.InvokeAsync<string>("localStorage.getItem", "location");
+            if (!string.IsNullOrEmpty(storedLocation))
+            {
+                useStoredData = true;
+                StateHasChanged();
+            }
+        }
+    }
+
+    private void getStoredUserData()
+    {
+        SearchInput = storedLocation;
+    }
+
+    private void HandleInputTypeChange()
+    {
+        switch (selectedOption)
+        {
+            case "city":
+                Hint = "City name (e.g., London)";
+                break;
+            case "coordinates":
+                Hint = "Longitude, Latitude (e.g., -0.13, 51.51)";
+                break;
+            case "ip":
+                Hint = "IP Address (e.g., 192.168.1.1)";
+                break;
+        }
+    }
+
+    private async Task HandleSubmitAsync()
+    {
+        ValidationErrorMessage = validation.ValidateLocation(SearchInput, selectedOption);
+
+        if (string.IsNullOrEmpty(ValidationErrorMessage))
+        {
+            tweets = await TwitterService.GetWeatherTweetsAsync(SearchInput);
+        }
+        else
+        {
+            StateHasChanged();
+        }
+    }
 }

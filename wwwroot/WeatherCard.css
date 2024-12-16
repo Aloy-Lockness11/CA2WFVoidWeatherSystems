@@ -1,0 +1,142 @@
+﻿.weather-forecast-container {
+    max-width: 800px; 
+    margin: auto; 
+    overflow: hidden; 
+    border: 2px solid darkgoldenrod; 
+    border-radius: 10px; 
+    padding: 1rem; 
+    background: #1c1c1c; 
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Optional: Shadow for depth */
+}
+
+/* Container for the weather list */
+.weather-list-container {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* Header for each day's forecast */
+.weather-day-header {
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+    .weather-day-header h3 {
+        font-size: 1.8rem;
+        color: darkgoldenrod;
+        font-weight: bold;
+        margin-bottom: 0.5rem;
+    }
+
+/* Horizontal scrolling container for hourly reports */
+.weather-day-scroller {
+    display: flex;
+    flex-direction: row;
+    overflow-x: auto; 
+    scroll-behavior: smooth;
+    white-space: nowrap;
+    gap: 1rem; 
+    padding-bottom: 1rem; 
+}
+    .weather-day-scroller::-webkit-scrollbar,
+    .weather-list-container::-webkit-scrollbar {
+        width: 12px; 
+        height: 12px; 
+    }
+
+    .weather-day-scroller::-webkit-scrollbar-track,
+    .weather-list-container::-webkit-scrollbar-track {
+        background: #2f2f2f; /* Dark track color */
+        border-radius: 10px; /* Rounded corners for track */
+    }
+
+    .weather-day-scroller::-webkit-scrollbar-thumb,
+    .weather-list-container::-webkit-scrollbar-thumb {
+        background: darkgoldenrod; /* Golden scrollbar thumb */
+        border-radius: 10px; /* Rounded corners for thumb */
+        border: 2px solid #1c1c1c; 
+    }
+
+        .weather-day-scroller::-webkit-scrollbar-thumb:hover,
+        .weather-list-container::-webkit-scrollbar-thumb:hover {
+            background: gold; 
+        }
+
+/* Scrollbar Styling for Firefox */
+.weather-day-scroller,
+.weather-list-container {
+    scrollbar-width: thin; 
+    scrollbar-color: darkgoldenrod #2f2f2f; /* Thumb and track colors */
+}
+
+/* Adjustments for Small Viewports (Optional) */
+@media (max-width: 600px) {
+    .weather-day-scroller::-webkit-scrollbar,
+    .weather-list-container::-webkit-scrollbar {
+        width: 8px;
+        height: 8px;
+    }
+
+    .weather-day-scroller::-webkit-scrollbar-thumb,
+    .weather-list-container::-webkit-scrollbar-thumb {
+        background: goldenrod; /* Slightly lighter color for smaller screens */
+    }
+}
+/* Each mini weather card */
+.weather-mini-card {
+    background: linear-gradient(135deg, #2f2f2f, #3a3a3a); /* Subtle gradient */
+    border-radius: 10px;
+    padding: 1rem;
+    box-shadow: 0 4px 10px rgba(128, 0, 128, 0.6);
+    min-width: 150px; /* Minimum width for cards */
+    max-width: 200px; /* Maximum width for consistency */
+    border: 2px solid gold;
+    flex-shrink: 0; /* Prevent cards from shrinking */
+    transition: transform 0.3s ease-in-out;
+}
+
+    /* Hover effect for mini cards */
+    .weather-mini-card:hover {
+        transform: scale(1.05);
+    }
+
+/* Time displayed on the mini card */
+.weather-time {
+    font-size: 1rem;
+    color: #dcdcdc;
+    text-align: center;
+    margin-bottom: 1rem;
+}
+
+/* Weather icon */
+.weather-icon img {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 0.5rem;
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Weather information */
+.weather-info {
+    text-align: center;
+    color: #dcdcdc;
+}
+
+    .weather-info h4 {
+        font-size: 1.8rem;
+        color: darkgoldenrod;
+        margin-bottom: 0.5rem;
+    }
+
+    .weather-info p {
+        font-size: 1.2rem;
+        margin: 0.2rem 0;
+    }
+
+    .weather-info strong {
+        font-weight: bold;
+        color: darkgoldenrod;
+        font-size: 1.1rem;
+    }
